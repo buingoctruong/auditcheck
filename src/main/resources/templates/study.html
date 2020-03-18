@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div th:replace="fragments/header :: header"/>
+	<br>
+	<select class="browser-default custom-select custom-select-lg mb-3" id="corpus">
+		<option selected value="0" disabled>Choose your environment</option>
+		<option th:each="corpus : ${listCorpus}" th:value="${corpus.corpusId}" th:text="${corpus.corpusName}"></option>
+	</select>
+	<div style="margin-top:100px;">
+		<div>
+			<button type="button" class="btn btn-success" onclick="uploadData()">Upload</button>
+			<div style="margin-top:10px;" class="loading"></div>
+		</div>
+		<div style="margin-top:100px;">
+			<button type="button" class="btn btn-success" onclick="trainingData()">Study</button>
+			<div style="margin-top:10px;" class="studying"></div>
+		</div>
+	</div>
+	
+	<script type="text/javascript" th:src="@{/javascript/upload.js}"></script>
+</body>
+</html>

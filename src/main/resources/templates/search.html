@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  
+  <link rel="stylesheet" href="/css/search.css" integrity="" crossorigin="anonymous">
+  
+</head>
+<body>
+	<div th:replace="fragments/header :: header"/>
+	<br>
+	<select class="browser-default custom-select custom-select-lg mb-3" id="corpus">
+		<option selected value="0" disabled>Choose your environment</option>
+		<option th:each="corpus : ${listCorpus}" th:value="${corpus.corpusId}" th:text="${corpus.corpusName}"></option>
+	</select>
+	<br>
+	<div class="container" style="margin-top:50px;">
+	    <br/>
+		<div class="row justify-content-center">
+	        <div class="col-12 col-md-10 col-lg-8">
+	            <form class="card card-sm">
+	                <div class="card-body row no-gutters align-items-center">
+	                    <div class="col-auto">
+	                        <i class="fas fa-search h4 text-body"></i>
+	                    </div>
+	                    <!--end of col-->
+	                    <div class="col">
+	                        <input id="inputTextForm" name="query" class="form-control form-control-lg form-control-borderless" type="text" placeholder="Search topics or keywords">
+	                    </div>
+	                    <!--end of col-->
+	                    <div class="col-auto">
+	                        <button id="sentBtn" class="btn btn-lg btn-success" type="button" onclick="send()">Search</button>
+	                    </div>
+	                    <!--end of col-->
+	                </div>
+	            </form>
+	        </div>
+	        <!--end of col-->
+	    </div>
+	</div>
+	
+	<div class="rounded float-left" style="padding-top: 50px; margin-left: 20px; z-index: 0; display: none;" id="loading">
+		<img src="/images/loading.gif" width="100" alt="loading..." class="">
+	</div>
+	
+	
+	<div class="search-list">
+	</div>
+	
+	<script type="text/javascript" th:src="@{/javascript/search.js}"></script>
+</body>
+</html>
