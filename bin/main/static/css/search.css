@@ -8,19 +8,6 @@
     box-shadow: none;
 }
 
-.search-table{
-    padding: 10%;
-    margin-top: -6%;
-}
-.search-box{
-    background: #c1c1c1;
-    border: 1px solid #ababab;
-    padding: 3%;
-}
-.search-box input:focus{
-    box-shadow:none;
-    border:2px solid #eeeeee;
-}
 .search-list{
     background: #fff;
     border: 1px solid #ababab;

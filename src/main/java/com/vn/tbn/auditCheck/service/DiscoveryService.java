@@ -21,7 +21,7 @@ public interface DiscoveryService {
 	
 	public boolean isTrainingAtCollection(String environmentId, String collectionId);
 	
-	public void deleteAllTrainingData(String environmentId, String collectionId);
+	public int deleteAllTrainingData(String environmentId, String collectionId);
 	
 	public HashMap<String, String> addQueryToTrainingData(List<String> data, String environmentId,
 			String collectionId);

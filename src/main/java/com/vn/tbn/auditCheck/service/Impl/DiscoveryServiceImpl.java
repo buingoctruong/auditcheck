@@ -116,10 +116,10 @@ public class DiscoveryServiceImpl implements DiscoveryService {
 	}
 	
 	@Override
-	public void deleteAllTrainingData(String environmentId, String collectionId) {
+	public int deleteAllTrainingData(String environmentId, String collectionId) {
 		DeleteAllTrainingDataOptions options = new DeleteAllTrainingDataOptions.Builder(
 				environmentId, collectionId).build();
-		getDiscovery().deleteAllTrainingData(options).execute();
+		return getDiscovery().deleteAllTrainingData(options).execute().getStatusCode();
 	}
 	
 	@Override

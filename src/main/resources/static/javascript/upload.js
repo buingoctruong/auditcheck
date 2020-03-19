@@ -1,4 +1,7 @@
+var $loading = $('#loading');
+
 function uploadData() {
+	$loading.show();
 	var corpusId = document.getElementById("corpus").value;
 	var data = {
 		"corpusId": corpusId
@@ -10,7 +13,7 @@ function uploadData() {
 		contentType: "application/json; charset=utf-8",
 		data: JSON.stringify(data),
 		success: function(data, textStatus, jqXHR){
-	        console.log("=====> " + data);
+			$loading.hide();
 	    },
 		error: function(jqXHR, textStatus, errorThrown){
         }
@@ -18,6 +21,7 @@ function uploadData() {
 }
 
 function trainingData() {
+	$loading.show();
 	var corpusId = document.getElementById("corpus").value;
 	var data = {
 		"corpusId": corpusId
@@ -29,7 +33,7 @@ function trainingData() {
 		contentType: "application/json; charset=utf-8",
 		data: JSON.stringify(data),
 		success: function(data, textStatus, jqXHR){
-	        console.log("=====> " + data);
+			$loading.hide();
 	    },
 		error: function(jqXHR, textStatus, errorThrown){
         }

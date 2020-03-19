@@ -13,12 +13,25 @@ import lombok.Data;
 @Data
 @Table(name = "t_feedback_question")
 public class FeedbackCollectionData extends BaseData {
-	public Integer getFeedback_Id() {
-		return feedback_Id;
+	@Id
+	@Column(name = "feedback_id", nullable = false)
+	public Integer feedbackId;
+	
+	@Column(name = "corpus_id", nullable = false)
+	public Integer corpusId;
+	
+	@Column(name = "category", length = 32500)
+	public String category;
+	
+	@Column(name = "question", length = 32500)
+	public String question;
+	
+	public Integer getFeedbackId() {
+		return feedbackId;
 	}
 
-	public void setFeedback_Id(Integer feedback_Id) {
-		this.feedback_Id = feedback_Id;
+	public void setFeedbackId(Integer feedbackId) {
+		this.feedbackId = feedbackId;
 	}
 
 	public Integer getCorpusId() {
@@ -44,18 +57,4 @@ public class FeedbackCollectionData extends BaseData {
 	public void setQuestion(String question) {
 		this.question = question;
 	}
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "feedback_id", nullable = false)
-	public Integer feedback_Id;
-	
-	@Column(name = "corpus_id", nullable = false)
-	public Integer corpusId;
-	
-	@Column(name = "category", length = 32500)
-	public String category;
-	
-	@Column(name = "question", length = 32500)
-	public String question;
 }

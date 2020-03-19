@@ -82,12 +82,12 @@ public class searchController {
 			temp.setQuestion((String) item.get("question"));
 			temp.setAnswer((String) item.get("answer"));
 			temp.setCategory((String)item.get("category"));
-			temp.setDataId((String) item.get("category"));
+			temp.setDataId((String) item.get("data_id"));
 			temp.setConfidence(item.getResultMetadata().getConfidence());
 			
 	        searchLists.add(temp);
 		}
-				
+
 		return new ResponseEntity<List<ResultSearch>>(searchLists, HttpStatus.OK);
 	}
 }
