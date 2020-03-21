@@ -9,13 +9,15 @@ function uploadData() {
 	
 	$.ajax({
 		type: "POST",
-		url: "/study/upload",
+		url: "/watson/data",
 		contentType: "application/json; charset=utf-8",
 		data: JSON.stringify(data),
 		success: function(data, textStatus, jqXHR){
 			$loading.hide();
+			console.log("====> success : " + textStatus);
 	    },
 		error: function(jqXHR, textStatus, errorThrown){
+	    	console.log("====> fail : " + textStatus);
         }
 	});
 }
@@ -29,13 +31,15 @@ function trainingData() {
 	
 	$.ajax({
 		type: "POST",
-		url: "/study",
+		url: "/watson/training",
 		contentType: "application/json; charset=utf-8",
 		data: JSON.stringify(data),
 		success: function(data, textStatus, jqXHR){
 			$loading.hide();
+			console.log("====> success : " + textStatus);
 	    },
 		error: function(jqXHR, textStatus, errorThrown){
+	    	console.log("====> fail : " + textStatus);
         }
 	});
 }

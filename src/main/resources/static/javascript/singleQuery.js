@@ -4,22 +4,35 @@ var $dislike = $('#dislike');
 var listDataId = [];
 
 function send() {
-	$loading.show();
-	$chatElement.hide();
 	var corpusId = document.getElementById("corpus").value;
-	var query = document.getElementById("inputTextForm").value;
+	if (corpusId === '0') {
+		alert("Please! Enter the environment!");
+	} else {
+		var query = document.getElementById("inputTextForm").value;
+		query = trimmable(query);
+		if (!query) {
+			alert("Please! Enter the question!");
+		} else {
+			query = escapeHtml(query);
+			$loading.show();
+			$chatElement.hide();
+			
+			var data = {
+				"corpusId": corpusId,
+				"query": query
+			};
+			watsonRequest(data, query);
+		}
+	}
+}
 
-	var data = {
-		"corpusId": corpusId,
-		"query": query.trim()
-	};
-	
+function watsonRequest(data, query) {
 	$.ajax({
 		type: "POST",
-		url: "/search",
+		url: "/query",
 		contentType: "application/json",
 		data: JSON.stringify(data),
-		success: function(data, textStatus, jqXHR){
+		success: function(data, textStatus, jqXHR) {
 			$loading.hide();			
 			var message = '';
 			available = data;
@@ -31,7 +44,8 @@ function send() {
 				message = message
 						+ '<h3>Candidates Results</h3>\n'
 						+ '<div class="list-group">\n';
-						
+				
+				listDataId = [];
 				for (var i = 0; i < data.length; i++) {
 					if (data[i].confidence) {
 						var numChange = parseFloat(data[i].confidence);
@@ -84,10 +98,10 @@ function makeRelevance(question, dataId) {
 		data: JSON.stringify(data),
 		success: function(data, textStatus, jqXHR){
 			$('#dislike').prop('disabled', true);
-			console.log('====> success');
+			console.log('====> success : ' + textStatus);
 	    },
 		error: function(jqXHR, textStatus, errorThrown){
-	    	console.log('====> fail');
+	    	console.log('====> fail : ' + textStatus);
         }
 	});
 }
@@ -95,6 +109,9 @@ function makeRelevance(question, dataId) {
 function makeIrrelevance() {
 	var corpusId = document.getElementById("corpus").value;
 	var query = document.getElementById("inputTextForm").value;
+	query = trimmable(query);
+	query = escapeHtml(query);
+	
 	var data = {
 			"question": query,
 			"category": "",
@@ -109,10 +126,10 @@ function makeIrrelevance() {
 		data: JSON.stringify(data),
 		success: function(data, textStatus, jqXHR){
 			listDataId = [];
-			console.log('====> success');
+			console.log('====> success : ' + textStatus);
 	    },
 		error: function(jqXHR, textStatus, errorThrown){
-	    	console.log('====> fail');
+	    	console.log('====> fail : ' + textStatus);
         }
 	});
 }

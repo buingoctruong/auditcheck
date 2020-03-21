@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @RequestMapping("/")
-public class topController {
+public class TopController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView index(ModelAndView modelAndView, HttpServletRequest request) {
 		modelAndView.setViewName("index");

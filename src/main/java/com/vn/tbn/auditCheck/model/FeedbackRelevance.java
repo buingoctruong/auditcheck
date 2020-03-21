@@ -12,7 +12,7 @@ import lombok.Data;
 @Data
 @Table(name = "t_feedback_relevance")
 @IdClass(RelevanceDataId.class)
-public class RelevanceCollectionData {
+public class FeedbackRelevance {
 	public Integer getFeedbackId() {
 		return feedbackId;
 	}

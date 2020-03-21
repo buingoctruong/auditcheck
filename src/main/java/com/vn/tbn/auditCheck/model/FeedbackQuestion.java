@@ -12,7 +12,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "t_feedback_question")
-public class FeedbackCollectionData extends BaseData {
+public class FeedbackQuestion extends BaseData {
 	@Id
 	@Column(name = "feedback_id", nullable = false)
 	public Integer feedbackId;

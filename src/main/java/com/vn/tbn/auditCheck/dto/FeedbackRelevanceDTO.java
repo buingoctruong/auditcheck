@@ -1,12 +1,13 @@
 package com.vn.tbn.auditCheck.dto;
 
-public class FeedBackDTO {
+public class FeedbackRelevanceDTO {
 	private int corpusId;
 	private String question;
 	private String category;
 	private int dataId;
 	private int relevance;
 	private int[] listDataId;
+	
 	public int getCorpusId() {
 		return corpusId;
 	}

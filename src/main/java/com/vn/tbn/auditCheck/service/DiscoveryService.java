@@ -2,22 +2,30 @@ package com.vn.tbn.auditCheck.service;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
-import com.google.gson.JsonObject;
+import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.watson.discovery.v1.Discovery;
+import com.ibm.watson.discovery.v1.model.Collection;
+import com.ibm.watson.discovery.v1.model.DeleteCollectionResponse;
+import com.ibm.watson.discovery.v1.model.QueryResponse;
 import com.sun.istack.NotNull;
 import com.vn.tbn.auditCheck.model.CollectionData;
-import com.vn.tbn.auditCheck.model.RelevanceCollectionData;
+import com.vn.tbn.auditCheck.model.FeedbackRelevance;
 
 public interface DiscoveryService {
 	public Discovery getDiscovery();
 	
-	public boolean addMultipeDocument(@NotNull String environmentId, @NotNull String collectionId, List<CollectionData> data);
+	public Response<QueryResponse> GetCollection(String environmentId,
+			String collectionId, String query);
 	
-	public CompletableFuture<String> updateDocumet(String documentId,String environmentId, String collectionId, JsonObject data);
+	public Response<DeleteCollectionResponse> DeleteCollection(String environmentId,
+			String collectionId);
 	
-	public String getDocumentId(JsonObject data, String documentId, String environmentId, String collectionId);
+	public Response<Collection> CreateCollection(String environmentId, 
+			String collectionName, String language);
+	
+	public void addMultipeDocument(@NotNull String environmentId,
+			@NotNull String collectionId, List<CollectionData> data);
 	
 	public boolean isTrainingAtCollection(String environmentId, String collectionId);
 	
@@ -25,10 +33,10 @@ public interface DiscoveryService {
 	
 	public HashMap<String, String> addQueryToTrainingData(List<String> data, String environmentId,
 			String collectionId);
-	
+			
 	public void addCollectionDataToTrainingData(List<CollectionData> data, HashMap<String, String> lanQueIds,
 			String environmentId, String Collectionid);
 	
-	public void addFeedbackDataToTrainingData(List<HashMap<String, RelevanceCollectionData>> documentIds, 
+	public void addFeedbackDataToTrainingData(List<HashMap<String, FeedbackRelevance>> documentIds, 
 			HashMap<String, String> lanQueIds, String environmentId, String CollectionId);
 }
