@@ -2,6 +2,7 @@ var $chatElement = $('.search-list');
 var $loading = $('#loading');
 var $dislike = $('#dislike');
 var listDataId = [];
+var $searchForm = $('.s003');
 
 function send() {
 	var corpusId = document.getElementById("corpus").value;
@@ -34,16 +35,19 @@ function watsonRequest(data, query) {
 		data: JSON.stringify(data),
 		success: function(data, textStatus, jqXHR) {
 			$loading.hide();			
-			var message = '';
+			var message = '<section class="pt-2"><div class="container">\n'
+					+ '<div class="row my-3"><div class="col-md-12">\n';
+			
 			available = data;
 			
 			if (null == data || data.length == 0) {
 				message = message
-						+ '<h3>No Results</h3>\n';
+						+ '<h4>No Results</h4></div></div></div></section>\n';
+						
 			} else {
 				message = message
-						+ '<h3>Candidates Results</h3>\n'
-						+ '<div class="list-group">\n';
+						+ '<h4>Candidates Results</h4></div></div>\n';
+				
 				
 				listDataId = [];
 				for (var i = 0; i < data.length; i++) {
@@ -60,18 +64,24 @@ function watsonRequest(data, query) {
 					listDataId.push(data[i].dataId);
 					
 					message = message
-							+ '<div class="list-group-item flex-column align-items-start">\n'
-							+ '<div class="float-left"><div class="d-flex w-100 justify-content-between">\n'
-							+ '<h5 class="mb-1">\n'
-							+ data[i].question + '</h5></div><p class="mb-1">\n'
+							+ '<div class="row mb-3"><div class="col-md-12"><div class="card">\n'
+							+ '<div class="card-body"><div class="row "><div class="col-md-11"><h4>\n'
+							+ data[i].question + '</h4><p>\n'
 							+ data[i].answer + '</p><small>Confidence : \n'
-							+ confidence + '%</small></div><div><button id="\n'
-							+ data[i].dataId + '" type="button" class="btn btn-danger float-right" onclick="makeRelevance(\''
-							+ query + '\',' + data[i].dataId + ')">Like</button></div></div>\n';
+							+ confidence + '%</small></div><div class="col-md-1">\n'
+							+ '<div class="sub-row"><button type="button" class="btn btn-danger" '
+							+ 'onclick="makeRelevance(\'' + query + '\',' + data[i].dataId + ')" '
+							+ 'style="position: absolute; bottom: 0;">Like</button>\n'
+							+ '</div></div></div></div></div></div></div>\n';
 				}
-				message = message + '</div>\n';
-				message = message + '<div style="margin-top:10px; float:right"><button id="dislike" type="button" class="btn btn-danger" onclick="makeIrrelevance()">Dislike</button><div>\n';
+				message = message + '</div></section>\n';
+				message = message
+						+ '<br><div><div class="col-md-11">\n'
+						+ '<button id="dislike" type="button" class="btn btn-danger" '
+						+ 'style="float: right; margin-top: 10px; margin-bottom: 10px;" '
+						+ 'onclick="makeIrrelevance()">Dislike</button></div></div>';
 			}
+			$searchForm.css({'min-height': 60 + 'vh'});
 			$chatElement.html(message);
 			$chatElement.show();
 	    },
