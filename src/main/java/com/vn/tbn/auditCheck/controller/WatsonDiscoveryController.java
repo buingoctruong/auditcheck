@@ -1,6 +1,9 @@
 package com.vn.tbn.auditCheck.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -21,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.watson.discovery.v1.model.DeleteCollectionResponse;
 import com.vn.tbn.auditCheck.dto.SingleQueryDTO;
+import com.vn.tbn.auditCheck.dto.WatsonCollectionDTO;
 import com.vn.tbn.auditCheck.model.BaseData;
 import com.vn.tbn.auditCheck.model.Collection;
 import com.vn.tbn.auditCheck.model.CollectionData;
@@ -103,7 +107,11 @@ public class WatsonDiscoveryController {
 		}
 		
 		String language = corpus.getLanguageCode();
-		String collectionName = corpus.getCorpusId() + "_" + System.currentTimeMillis();
+		
+		long currentDateTime = System.currentTimeMillis();
+		Date currentDate = new Date(currentDateTime);
+	    DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		String collectionName = corpus.getCorpusId() + "_" + df.format(currentDate);
 		
 		// create collection on watson
 		Response<com.ibm.watson.discovery.v1.model.Collection> createResponse = discoveryService.
@@ -219,7 +227,8 @@ public class WatsonDiscoveryController {
 	}
 	
 	@RequestMapping(value = "/collection/status/{corpusId}", method = RequestMethod.GET)
-	public ResponseEntity<?> getCollectionStatus(@PathVariable("corpusId") int corpusId, HttpServletRequest request) {
+	public ResponseEntity<WatsonCollectionDTO> getCollectionStatus(@PathVariable("corpusId") int corpusId,
+			HttpServletRequest request) {
 		Corpus corpus = corpusRepository.findByCorpusId(corpusId);
 		Collection collection = collectionRepository.findByCorpusId(corpusId);
 		
@@ -233,11 +242,20 @@ public class WatsonDiscoveryController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} else {
 			com.ibm.watson.discovery.v1.model.Collection result = createResponse.getResult();
-			log.info("====> : " + result.getName());
-			log.info("====> : " + result.getUpdated());
-			log.info("====> : " + result.getTrainingStatus().getSuccessfullyTrained());
+			WatsonCollectionDTO obj = new WatsonCollectionDTO();
+			String name = null != result.getName() ? result.getName() : "";
+			String dateOdUpdate = null != result.getUpdated() ?
+					String.valueOf(result.getUpdated().getTime()) : "";
+			String dateOfTraining = null != result.getTrainingStatus().getSuccessfullyTrained() ?
+				String.valueOf(result.getTrainingStatus().getSuccessfullyTrained().getTime()) : "";
+				
+			obj.setName(name);
+			obj.setDateOfUpdate(dateOdUpdate);
+			obj.setDataOfTraining(dateOfTraining);
+			obj.setProcessing(result.getTrainingStatus().isProcessing());
+			obj.setAvailable(result.getTrainingStatus().isAvailable());
+			
+			return new ResponseEntity<WatsonCollectionDTO>(obj, HttpStatus.OK);
 		}
-		
-		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }
