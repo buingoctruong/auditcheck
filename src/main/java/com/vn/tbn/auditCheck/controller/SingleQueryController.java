@@ -60,7 +60,7 @@ public class SingleQueryController {
 		String environmentId = corpus.getEnviromentId();
 		String collectionId = collection.getCollectionId();
 		
-		Response<QueryResponse> queryResponse = discoveryService.GetCollection(environmentId, 
+		Response<QueryResponse> queryResponse = discoveryService.GetCollectionByQuery(environmentId, 
 				collectionId, query);
 		
 		if (queryResponse.getStatusCode() != 200) {

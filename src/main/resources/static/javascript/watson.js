@@ -1,4 +1,6 @@
 var $loading = $('#loading');
+var $tableStatus = $('#tableStatus');
+
 
 function uploadData() {
 	$loading.show();
@@ -9,7 +11,7 @@ function uploadData() {
 	
 	$.ajax({
 		type: "POST",
-		url: "/watson/data",
+		url: "/watson/collection/data",
 		contentType: "application/json; charset=utf-8",
 		data: JSON.stringify(data),
 		success: function(data, textStatus, jqXHR){
@@ -31,7 +33,7 @@ function trainingData() {
 	
 	$.ajax({
 		type: "POST",
-		url: "/watson/training",
+		url: "/watson/collection/training",
 		contentType: "application/json; charset=utf-8",
 		data: JSON.stringify(data),
 		success: function(data, textStatus, jqXHR){
@@ -42,4 +44,22 @@ function trainingData() {
 	    	console.log("====> fail : " + textStatus);
         }
 	});
+}
+
+function getStatus() {
+	var corpusId = document.getElementById("corpus").value;
+	
+	$.ajax({
+		type: "GET",
+		url: "/watson/collection/status/" + corpusId,
+		contentType: "application/json; charset=utf-8",
+		success: function(data, textStatus, jqXHR){
+			console.log("====> success : " + textStatus);
+	    },
+		error: function(jqXHR, textStatus, errorThrown){
+	    	console.log("====> fail : " + textStatus);
+        }
+	});
+	
+	
 }

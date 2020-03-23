@@ -15,7 +15,10 @@ import com.vn.tbn.auditCheck.model.FeedbackRelevance;
 public interface DiscoveryService {
 	public Discovery getDiscovery();
 	
-	public Response<QueryResponse> GetCollection(String environmentId,
+	public Response<Collection> GetCollection(String environmentId,
+			String collectionId);
+	
+	public Response<QueryResponse> GetCollectionByQuery(String environmentId,
 			String collectionId, String query);
 	
 	public Response<DeleteCollectionResponse> DeleteCollection(String environmentId,

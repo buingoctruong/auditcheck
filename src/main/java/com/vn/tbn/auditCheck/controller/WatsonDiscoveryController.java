@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -72,7 +73,7 @@ public class WatsonDiscoveryController {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "/data", method = RequestMethod.POST)
+	@RequestMapping(value = "/collection/data", method = RequestMethod.POST)
 	public ResponseEntity<?> uploadData(@RequestBody SingleQueryDTO upload, HttpServletRequest request) {
 		Corpus corpus = corpusRepository.findByCorpusId(upload.getCorpusId());
 		Collection oldCollection = collectionRepository.findByCorpusId(upload.getCorpusId());
@@ -134,7 +135,7 @@ public class WatsonDiscoveryController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/training", method = RequestMethod.POST)
+	@RequestMapping(value = "/collection/training", method = RequestMethod.POST)
 	public ResponseEntity<?> trainingData(@RequestBody SingleQueryDTO upload, HttpServletRequest request) {
 		int corpusId = upload.getCorpusId();
 		Corpus corpus = corpusRepository.findByCorpusId(corpusId);
@@ -214,6 +215,29 @@ public class WatsonDiscoveryController {
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			}
 		}
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/collection/status/{corpusId}", method = RequestMethod.GET)
+	public ResponseEntity<?> getCollectionStatus(@PathVariable("corpusId") int corpusId, HttpServletRequest request) {
+		Corpus corpus = corpusRepository.findByCorpusId(corpusId);
+		Collection collection = collectionRepository.findByCorpusId(corpusId);
+		
+		String environmentId = corpus.getEnviromentId();
+		String collectionId = collection.getCollectionId();
+		
+		Response<com.ibm.watson.discovery.v1.model.Collection> createResponse = discoveryService.
+				GetCollection(environmentId, collectionId);
+		
+		if (200 != createResponse.getStatusCode()) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		} else {
+			com.ibm.watson.discovery.v1.model.Collection result = createResponse.getResult();
+			log.info("====> : " + result.getName());
+			log.info("====> : " + result.getUpdated());
+			log.info("====> : " + result.getTrainingStatus().getSuccessfullyTrained());
+		}
+		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

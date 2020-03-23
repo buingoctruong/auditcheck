@@ -67,8 +67,16 @@ public class DiscoveryServiceImpl implements DiscoveryService {
 		return discovery;
 	}
 	
+	public Response<Collection> GetCollection(String environmentId,
+			String collectionId) {
+		GetCollectionOptions getOptions = new GetCollectionOptions.Builder(environmentId, collectionId).build();
+		Response<Collection> getResponse = getDiscovery().getCollection(getOptions).execute();
+		
+		return getResponse;
+	}
+	
 	@Override
-	public Response<QueryResponse> GetCollection(String environmentId,
+	public Response<QueryResponse> GetCollectionByQuery(String environmentId,
 			String collectionId, String query) {
 		QueryOptions.Builder queryBuilder = new QueryOptions.Builder(environmentId, collectionId);
 		queryBuilder.query(query);
