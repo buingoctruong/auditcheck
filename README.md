@@ -1,6 +1,6 @@
 **Project Description**
 
-    SearchBot application is tool to get suitable results from the searching process. 
+    AuditCheck application is tool to get suitable results from the searching process. 
     IBM Watson Discovery service is integrated into this application. 
     With the IBM Watson Discovery service, this application can identify patterns, trends, and 
     insights from structured data and unstructured data to drive better decision making. 
