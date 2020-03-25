@@ -11,4 +11,11 @@
     * Upload data to IBM Watson Discovery, those data serve the searching 
         
     * Training data that is uploaded to IBM Watson Discovery 
+    
+**Technology**
+
+    Spring Boot Framework
+    Thymeleaf, JPA library
+    IBM watson discvovery service
+    Java, javascript, HTML
 
