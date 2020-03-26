@@ -25,7 +25,7 @@
     
     When you're finished rating the documents, you'll use Study function to upload all training data to Watson discovery to train.
     
-    Watson discovery will spend 30 minutes for training. when the training process finished, use the **Search** function 
+    Watson discovery will spend 30 minutes for training. when the training process finished, use the Search function 
     and you'll see more suitable results
     
 
@@ -33,7 +33,7 @@
 **Technology**
 
     Spring Boot Framework
-    Thymeleaf, JPA library
+    Thymeleaf, JPA library, Mysql
     IBM watson discvovery service
     Java, javascript, HTML
 
