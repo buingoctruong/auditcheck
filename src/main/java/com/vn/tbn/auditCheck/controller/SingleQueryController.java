@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.watson.discovery.v1.model.QueryResponse;
 import com.ibm.watson.discovery.v1.model.QueryResult;
-import com.vn.tbn.auditCheck.dto.SingleQueryDTO;
+import com.vn.tbn.auditCheck.dto.QueryDTO;
 import com.vn.tbn.auditCheck.model.Collection;
 import com.vn.tbn.auditCheck.model.Corpus;
 import com.vn.tbn.auditCheck.model.ResultSearch;
@@ -50,9 +50,9 @@ public class SingleQueryController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<List<ResultSearch>> searchResult(@RequestBody SingleQueryDTO dto) {
+	public ResponseEntity<List<ResultSearch>> searchResult(@RequestBody QueryDTO dto) {
 		int corpusId = dto.getCorpusId();
-		String query = dto.getQuery();
+		String query = dto.getQueries().get(0);
 		
 		Corpus corpus = corpusRepository.findByCorpusId(corpusId);
 		Collection collection = collectionRepository.findByCorpusId(corpusId);

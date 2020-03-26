@@ -23,7 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.watson.discovery.v1.model.DeleteCollectionResponse;
-import com.vn.tbn.auditCheck.dto.SingleQueryDTO;
+import com.vn.tbn.auditCheck.dto.QueryDTO;
 import com.vn.tbn.auditCheck.dto.WatsonCollectionDTO;
 import com.vn.tbn.auditCheck.model.BaseData;
 import com.vn.tbn.auditCheck.model.Collection;
@@ -78,7 +78,7 @@ public class WatsonDiscoveryController {
 	}
 	
 	@RequestMapping(value = "/collection/data", method = RequestMethod.POST)
-	public ResponseEntity<?> uploadData(@RequestBody SingleQueryDTO upload, HttpServletRequest request) {
+	public ResponseEntity<?> uploadData(@RequestBody QueryDTO upload, HttpServletRequest request) {
 		Corpus corpus = corpusRepository.findByCorpusId(upload.getCorpusId());
 		Collection oldCollection = collectionRepository.findByCorpusId(upload.getCorpusId());
 		
@@ -144,7 +144,7 @@ public class WatsonDiscoveryController {
 	}
 
 	@RequestMapping(value = "/collection/training", method = RequestMethod.POST)
-	public ResponseEntity<?> trainingData(@RequestBody SingleQueryDTO upload, HttpServletRequest request) {
+	public ResponseEntity<?> trainingData(@RequestBody QueryDTO upload, HttpServletRequest request) {
 		int corpusId = upload.getCorpusId();
 		Corpus corpus = corpusRepository.findByCorpusId(corpusId);
 		Collection collection = collectionRepository.findByCorpusId(corpusId);

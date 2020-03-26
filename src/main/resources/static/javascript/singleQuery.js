@@ -14,13 +14,15 @@ function send() {
 		if (!query) {
 			alert("Please! Enter the question!");
 		} else {
+			var listQuery = [];
 			query = escapeHtml(query);
+			listQuery.push(query)
 			$loading.show();
 			$chatElement.hide();
 			
 			var data = {
 				"corpusId": corpusId,
-				"query": query
+				"queries": listQuery
 			};
 			watsonRequest(data, query);
 		}

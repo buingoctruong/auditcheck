@@ -1,3 +1,5 @@
+var $loading = $('#loading');
+
 $(document).on('change','.up', function(){
 	var names = [];
 	var length = $(this).get(0).files.length;
@@ -26,12 +28,18 @@ function send() {
 	    	
 	    	if (header.length === 2 && header[0] === 'category'
 	    			&& header[1] === 'question') {
-	    		var list = [];
-	    		for(var i = 1; i < rows.length; i++){
-	      	      var item = rows[i].split(';');
-	      	      var query = item[0].concat('.',item[1]);
-	      	      list.push(query);
-	      	    }
+	    		if (rows.length > 1) {
+	    			$loading.show();
+	    			var listQuery = [];
+		    		for(var i = 1; i < rows.length; i++){
+		      	      var item = rows[i].split(';');
+		      	      var query = item[0].concat('.',item[1]);
+		      	      listQuery.push(query);
+		      	    }
+		    		watsonRequest(listQuery);
+	    		} else {
+	    			alert("Don't have any questions in the input file");
+	    		}
 	    	} else {
 	    		alert("The input file is wrong, please check again!");
 	    	}
@@ -40,4 +48,28 @@ function send() {
 	        console.log('====> ' + "error reading file");
 	    }
 	}
+}
+
+function watsonRequest(listQuery) {
+	var corpusId = document.getElementById("corpus").value;
+	
+	var data = {
+		"corpusId": corpusId,
+		"queries": listQuery
+	}
+	
+	$.ajax({
+		type: "POST",
+		url: "/queries",
+		contentType: "application/json",
+		data: JSON.stringify(data),
+		success: function(data, textStatus, jqXHR) {
+			$loading.hide();
+			console.log('====> data ' + JSON.stringify(data));
+			console.log('====> success ');
+	    },
+		error: function(jqXHR, textStatus, errorThrown){
+        }
+	});
+	
 }

@@ -1,19 +1,21 @@
 package com.vn.tbn.auditCheck.dto;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
-public class SingleQueryDTO {
+public class QueryDTO {
 	private int corpusId;
 	
-	private String query;
+	private List<String> queries;
 
-	public String getQuery() {
-		return query;
+	public List<String> getQueries() {
+		return queries;
 	}
 
-	public void setQuery(String query) {
-		this.query = query;
+	public void setQueries(List<String> queries) {
+		this.queries = queries;
 	}
 	
 	public int getCorpusId() {
