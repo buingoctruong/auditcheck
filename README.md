@@ -15,15 +15,15 @@
     
 **Workflow**
     
-    firstly, you upload all documents in the database to Watson Discovery Service by **Upload** function.
+    firstly, you upload all documents in the database to Watson Discovery Service by Upload function.
     
     Watson discovery Service gets the documents and starts ingesting (convert, enrich, clean, and normalize),
     store, and query data to extract actionable insights.
     
-    At this time, you'll use the **Search** function to get the results from Watson discovery, and rates each of the results, 
+    At this time, you'll use the Search function to get the results from Watson discovery, and rates each of the results, 
     mark the results as relevant or irrelevant (In this step, training data will be created).
     
-    When you're finished rating the documents, you'll use **Study** function to upload all training data to Watson discovery to train.
+    When you're finished rating the documents, you'll use Study function to upload all training data to Watson discovery to train.
     
     Watson discovery will spend 30 minutes for training. when the training process finished, use the **Search** function 
     and you'll see more suitable results
