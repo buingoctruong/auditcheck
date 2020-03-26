@@ -25,8 +25,8 @@
     
     When you're finished rating the documents, you'll use Study function to upload all training data to Watson discovery to train.
     
-     Watson discovery will spend 30 minutes for training. when the training process finished, use the Search function 
-     and you'll see more suitable results
+    Watson discovery will spend 30 minutes for training. when the training process finished, use the Search function 
+    and you'll see more suitable results
     
 
     
