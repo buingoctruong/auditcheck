@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="colorlib.com">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+    <link href="/css/multipleQuery.css" rel="stylesheet">
+  </head>
+  <body>
+  
+    <div th:replace="fragments/header :: header" />
+
+    <div class="multiple">
+	  <div class="row">
+		  <div class="col-sm-offset-2">
+		    <div class="form-group">
+		      <div class="input-group">
+		        <input type="text" class="form-control" readonly></input>
+		        <div class="input-group-btn">
+		          <span class="fileUpload btn btn-success">
+		            <span class="upl" id="upload">Upload</span>
+		            <input type="file" accept=".csv" class="upload up" id="uploadFile" />
+		          </span><!-- btn-orange -->
+		        </div><!-- btn -->
+		      </div><!-- group -->
+		      <div class="input-group mb-3">
+		        <select class="custom-select" id="corpus">
+				  <option selected value="0" disabled>Environment</option>
+                  <option th:each="corpus : ${listCorpus}" th:value="${corpus.corpusId}" th:text="${corpus.corpusName}"></option>
+				</select>
+				<button id="sentBtn" type="button" onclick="send()">Search</button>
+		      </div><!-- group -->
+		    </div><!-- form-group -->
+		  </div>
+		</div>
+	</div>
+    
+    <div class="search-list">
+    </div>
+  
+    <script type="text/javascript" th:src="@{/javascript/validate.js}"></script>
+    <script type="text/javascript" th:src="@{/javascript/multipleQuery.js}"></script>
+    
+  </body>
+</html>
