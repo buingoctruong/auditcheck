@@ -69,8 +69,9 @@ public class MultipleQueriesController {
 		
 		for (String query : queries) {
 			
+			// just get 5 results that have the highest confidence
 			Response<QueryResponse> queryResponse = discoveryService.GetCollectionByQuery(environmentId, 
-					collectionId, query);
+					collectionId, query, (long) 5);
 			
 			if (queryResponse.getStatusCode() != 200) {
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

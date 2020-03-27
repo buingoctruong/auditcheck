@@ -61,7 +61,7 @@ public class SingleQueryController {
 		String collectionId = collection.getCollectionId();
 		
 		Response<QueryResponse> queryResponse = discoveryService.GetCollectionByQuery(environmentId, 
-				collectionId, query);
+				collectionId, query, null);
 		
 		if (queryResponse.getStatusCode() != 200) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

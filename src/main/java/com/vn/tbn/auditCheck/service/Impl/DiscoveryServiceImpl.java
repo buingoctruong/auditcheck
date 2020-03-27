@@ -77,9 +77,12 @@ public class DiscoveryServiceImpl implements DiscoveryService {
 	
 	@Override
 	public Response<QueryResponse> GetCollectionByQuery(String environmentId,
-			String collectionId, String query) {
+			String collectionId, String query, Long count) {
 		QueryOptions.Builder queryBuilder = new QueryOptions.Builder(environmentId, collectionId);
 		queryBuilder.query(query);
+		if (null != count) {
+			queryBuilder.count(count);
+		}
 		Response<QueryResponse> queryResponse = getDiscovery().query(queryBuilder.build()).
 				execute();
 		

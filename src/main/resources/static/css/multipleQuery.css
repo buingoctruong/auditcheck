@@ -56,3 +56,44 @@
   background-position: center center;
   padding: 15px;
 }
+
+.search-list{
+	display: flex;
+    background: #fff;
+    border: 1px solid #ababab;
+    border-top: 10px;
+    width: 100%;
+	overflow-x: scroll;
+	white-space: nowrap;
+}
+
+#results {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#results th {
+  min-width: 500px;
+}
+
+#results td, #results th {
+  border: 1px solid #ddd;
+}
+
+#results tr:nth-child(even){background-color: #f2f2f2;}
+
+#results tr:hover {background-color: #ddd;}
+
+#results th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+
+input.defaultCheckbox {
+  width: 20px;
+  height: 20px;
+}

@@ -1,4 +1,6 @@
 var $loading = $('#loading');
+var $tableResult = $('.search-list');
+var $searchForm = $('.multiple');
 
 $(document).on('change','.up', function(){
 	var names = [];
@@ -65,11 +67,53 @@ function watsonRequest(listQuery) {
 		data: JSON.stringify(data),
 		success: function(data, textStatus, jqXHR) {
 			$loading.hide();
-			console.log('====> data ' + JSON.stringify(data));
-			console.log('====> success ');
+			
+			var message = '<table id="results" style="overflow: scroll;"><thead><tr class="header"><th>Query</th><th colspan="2">Result 1</th>\n'
+					+ '<th colspan="2">Result 2</th><th colspan="2">Result 3</th><th colspan="2">Result 4</th>\n'
+					+ '<th colspan="2">Result 5</th></tr></thead><tbody>\n';
+			
+			Object.keys(data).forEach(function(key) {
+				message = message
+						+ '<tr><td>' + key + '</td>\n';
+				data[key].forEach(function(item) {
+					if (item['confidence']) {
+						var numChange = parseFloat(item['confidence']);
+						numChange = numChange * 100;
+						var confidence = numChange.toFixed(1);
+					} else if (item['confidence'] === 0) {
+						var confidence  = 0;
+					} else {
+						var confidence = "N/A";
+					}
+					
+					message = message
+						+ '<td><input type="checkbox" class="defaultCheckbox" id="' +  item['dataId'] + '"></td>'
+						+ '<td><h4>' + item['question'] + '</h4>\n'
+						+ '<p>' + item['answer'] + '</p>\n'
+						+ '<small>Confidence : ' + confidence + '%</small></td>\n';
+				});
+				message = message + '</tr>\n';
+			});
+			message = message
+					+ '</tbody></table>\n';
+			
+			$searchForm.css({'min-height': 60 + 'vh'});
+			$tableResult.html(message);
+			
 	    },
 		error: function(jqXHR, textStatus, errorThrown){
         }
 	});
-	
 }
+
+$('#results').ready(function() {
+    $('input[type="checkbox"]').on('change', function() {
+      var checkedValue = $(this).prop('checked');
+        // uncheck sibling checkboxes (checkboxes on the same row)
+        $(this).closest('tr').find('input[type="checkbox"]').each(function(){
+           $(this).prop('checked',false);
+        });
+        $(this).prop("checked",checkedValue);
+
+    });
+});

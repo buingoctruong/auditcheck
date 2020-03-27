@@ -19,7 +19,7 @@ public interface DiscoveryService {
 			String collectionId);
 	
 	public Response<QueryResponse> GetCollectionByQuery(String environmentId,
-			String collectionId, String query);
+			String collectionId, String query, Long count);
 	
 	public Response<DeleteCollectionResponse> DeleteCollection(String environmentId,
 			String collectionId);
