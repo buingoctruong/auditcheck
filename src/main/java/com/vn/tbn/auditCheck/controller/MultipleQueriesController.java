@@ -44,7 +44,7 @@ public class MultipleQueriesController {
 	@Autowired
 	DiscoveryService discoveryService;
 	
-	Logger log = LoggerFactory.getLogger(WatsonDiscoveryController.class);
+	Logger log = LoggerFactory.getLogger(MultipleQueriesController.class);
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView index(ModelAndView modelAndView, HttpServletRequest request) {

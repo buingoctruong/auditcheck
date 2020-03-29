@@ -3,6 +3,7 @@ var $makeIrrelevance = $('#dislike');
 var $makeRelevance = $('#like');
 var $tableResult = $('.search-list');
 var $searchForm = $('.multiple');
+var listRelevance = new Map();
 
 $(document).on('change','.up', function(){
 	var names = [];
@@ -21,6 +22,7 @@ $(document).on('change','.up', function(){
 });
 
 function send() {
+	listRelevance.clear();
 	var file = document.getElementById('uploadFile').files[0];
 	if (file) {
 	    var reader = new FileReader();
@@ -101,10 +103,56 @@ function watsonRequest(listQuery) {
 			
 			$searchForm.css({'min-height': 60 + 'vh'});
 			$tableResult.html(message);
+			makeEventForCheckbox();
 			$makeIrrelevance.show();
 			$makeRelevance.show();
 	    },
 		error: function(jqXHR, textStatus, errorThrown){
         }
+	});
+}
+
+function makeEventForCheckbox() {
+	$(document).ready(function() {
+	    $('input[type=checkbox]').change(function() {
+	      	var checkedValue = $(this).prop('checked');
+	        // uncheck sibling checkboxes (checkboxes on the same row)
+	        $(this).closest('tr').find('input[type="checkbox"]').each(function(){
+	           $(this).prop('checked',false);
+	        });
+	        $(this).prop("checked",checkedValue);
+	        
+	        listRelevance.set($(this).parents("tr").children("td:first").text(), $(this).attr("id"));
+	    });
+	});
+}
+
+function makeRelevance() {
+	var corpusId = document.getElementById("corpus").value;
+	var listData = [];
+		
+	for (var [key, value] of listRelevance.entries()) {
+		var item = key.split('.');
+		var data = {
+			"corpusId" : corpusId,
+			"category" : item[0],
+			"question" : item[1],
+			"dataId" : value,
+			"relevance" : 10
+		}
+		listData.push(data);
+	}
+	
+	$.ajax({
+		type: "POST",
+		url: "/feedback/list/relevance",
+		contentType: "application/json",
+		data: JSON.stringify(listData),
+		success: function(data, textStatus, jqXHR) {
+			console.log(textStatus);
+		},
+		error: function(jqXHR, textStatus, errorThrown){
+			console.log(textStatus);
+	    }
 	});
 }
