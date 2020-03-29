@@ -71,7 +71,7 @@ function watsonRequest(data, query) {
 							+ data[i].question + '</h4><p>\n'
 							+ data[i].answer + '</p><small>Confidence : \n'
 							+ confidence + '%</small></div><div class="col-md-1">\n'
-							+ '<div class="sub-row"><button type="button" class="btn btn-danger" '
+							+ '<div class="sub-row"><button type="button" class="btn btn-success" '
 							+ 'onclick="makeRelevance(\'' + query + '\',' + data[i].dataId + ')" '
 							+ 'style="position: absolute; bottom: 0;">Like</button>\n'
 							+ '</div></div></div></div></div></div></div>\n';

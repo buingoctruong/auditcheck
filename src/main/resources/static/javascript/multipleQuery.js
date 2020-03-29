@@ -1,4 +1,6 @@
 var $loading = $('#loading');
+var $makeIrrelevance = $('#dislike');
+var $makeRelevance = $('#like');
 var $tableResult = $('.search-list');
 var $searchForm = $('.multiple');
 
@@ -87,7 +89,7 @@ function watsonRequest(listQuery) {
 					}
 					
 					message = message
-						+ '<td><input type="checkbox" class="defaultCheckbox" id="' +  item['dataId'] + '"></td>'
+						+ '<td><input type="checkbox" class="defaultCheckbox" id="' + item['dataId'] + '"></td>'
 						+ '<td><h4>' + item['question'] + '</h4>\n'
 						+ '<p>' + item['answer'] + '</p>\n'
 						+ '<small>Confidence : ' + confidence + '%</small></td>\n';
@@ -99,21 +101,10 @@ function watsonRequest(listQuery) {
 			
 			$searchForm.css({'min-height': 60 + 'vh'});
 			$tableResult.html(message);
-			
+			$makeIrrelevance.show();
+			$makeRelevance.show();
 	    },
 		error: function(jqXHR, textStatus, errorThrown){
         }
 	});
 }
-
-$('#results').ready(function() {
-    $('input[type="checkbox"]').on('change', function() {
-      var checkedValue = $(this).prop('checked');
-        // uncheck sibling checkboxes (checkboxes on the same row)
-        $(this).closest('tr').find('input[type="checkbox"]').each(function(){
-           $(this).prop('checked',false);
-        });
-        $(this).prop("checked",checkedValue);
-
-    });
-});
