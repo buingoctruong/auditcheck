@@ -35,7 +35,7 @@
     Spring Boot Framework
     Thymeleaf, JPA library, Mysql
     IBM watson discvovery service
-    Java, javascript, HTML
+    Java, javascript, HTML, CSS, JQuery
 
 **Extra**
     
