@@ -37,3 +37,9 @@
     IBM watson discvovery service
     Java, javascript, HTML
 
+**Extra**
+    
+    I also wrote an article that talks about this tool and published it on medium website.
+    If you want to have a look, I invite you to check my article by accessing the following link.
+    
+> https://medium.com/voice-tech-podcast/learn-ibm-watson-discovery-during-the-covid-19-pandemic-727e40fe14e1 
